@@ -71,3 +71,8 @@ jobs:
         echo "Done cloning extract-utils."
         git clone --depth=1  https://github.com/LineageOS/android_prebuilts_extract-tools -b lineage-20.0 ./android/prebuilts/extract-tools
         echo "Done cloning extract-tools."
+
+    - name: Setup upterm session
+      uses: owenthereal/action-upterm@v1
+      with:
+        limit-access-to-actor: true
