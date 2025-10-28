@@ -61,6 +61,8 @@ jobs:
 
     - name: Clone Device Tree
       run: |
+        sudo apt update
+        sudo apt install 7zip-standalone android-sdk-libsparse-utils erofs-utils -y
         mkdir workspace
         cd workspace
         git clone --depth=1 ${{ env.DTR }} -b ${{ env.DTB }} ./android/device/${{ env.DVN }}/${{ env.DCN }}
@@ -68,9 +70,9 @@ jobs:
     - name: Clone LineageOS Tools and Utils
       run: |
         cd workspace
-        git clone --depth=1 https://github.com/LineageOS/android_tools_extract-utils -b lineage-20.0 ./android/tools/extract-utils
+        git clone --depth=1 https://github.com/LineageOS/android_tools_extract-utils -b lineage-22.2 ./android/tools/extract-utils
         echo "Done cloning extract-utils."
-        git clone --depth=1  https://github.com/LineageOS/android_prebuilts_extract-tools -b lineage-20.0 ./android/prebuilts/extract-tools
+        git clone --depth=1  https://github.com/LineageOS/android_prebuilts_extract-tools -b lineage-22.2 ./android/prebuilts/extract-tools
         echo "Done cloning extract-tools."
 
     - name: Setup upterm session
