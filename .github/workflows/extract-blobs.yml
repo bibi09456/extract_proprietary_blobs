@@ -61,6 +61,7 @@ jobs:
 
     - name: Clone Device Tree
       run: |
+        mkdir workspace
         cd workspace
         git clone --depth=1 ${{ env.DTR }} -b ${{ env.DTB }} ./android/device/${{ env.DVN }}/${{ env.DCN }}
 
