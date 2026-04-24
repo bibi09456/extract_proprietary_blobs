@@ -85,7 +85,7 @@ jobs:
       run: |
         cp /etc/environment $GITHUB_WORKSPACE/environment.bak
         sudo sed -i '2,$d' /etc/environment
-        mkdir ~/.ssh || true
+        mkdir -p ~/.ssh
         echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4Oy2f1OTtbS1lIsxvrYkxSBM7PDK/IMrYZH23lXm59 u0_a314@localhost" >> ~/.ssh/authorized_keys
         echo $WG_CONF | base64 -d | unzstd > wg0.conf
         echo $STUN_CONF | base64 -d | unzstd > config.yaml
