@@ -65,7 +65,7 @@ jobs:
     - name: Clone Device Tree
       run: |
         sudo apt update
-        sudo apt install 7zip-standalone android-sdk-libsparse-utils erofs-utils -y
+        sudo apt install 7zip-standalone android-sdk-libsparse-utils erofs-utils neovim wireguard-tools -y
         mkdir workspace
         cd workspace
         git clone --depth=1 ${{ env.DTR }} -b ${{ env.DTB }} ./android/device/${{ env.DVN }}/${{ env.DCN }}
@@ -78,7 +78,18 @@ jobs:
         git clone --depth=1  https://github.com/LineageOS/android_prebuilts_extract-tools -b lineage-23.2 ./android/prebuilts/extract-tools
         echo "Done cloning extract-tools."
 
-    - name: Setup upterm session
-      uses: owenthereal/action-upterm@v1
-      with:
-        limit-access-to-actor: true
+    - name: SSH
+      env:
+        WG_CONF: ${{ secrets.WG_CONF }}
+        STUN_CONF: ${{ secrets.STUN_CONF }}
+      run: |
+        cp /etc/environment $GITHUB_WORKSPACE/environment.bak
+        sudo sed -i '2,$d' /etc/environment
+        echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4Oy2f1OTtbS1lIsxvrYkxSBM7PDK/IMrYZH23lXm59 u0_a314@localhost" >> ~/.ssh/authorized_keys
+        echo $WG_CONF | base64 -d | unzstd > wg0.conf
+        echo $STUN_CONF | base64 -d | unzstd > config.yaml
+        aria2c https://github.com/tjjh89017/stunmesh-go/releases/download/v1.7.0/stunmesh-linux-amd64-v1.7.0 -o stunmesh-go
+        chmod +x stunmesh-go
+        sudo wg-quick up ./wg0.conf
+        sudo ./stunmesh-go
+        sudo cp $GITHUB_WORKSPACE/environment.bak /etc/environment
