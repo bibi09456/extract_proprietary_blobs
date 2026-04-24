@@ -22,11 +22,11 @@ on:
       USER_NAME:
         description: 'Name in Github Account'
         required: true
-        default: 'Carlo Dee'
+        default: 'bibi09456'
       USER_EMAIL:
         description: 'E-mail in Github Account'
         required: true
-        default: 'carlodee.official@proton.me'
+        default: '55490658+bibi09456@users.noreply.github.com'
 
 jobs:
   build:
@@ -73,9 +73,9 @@ jobs:
     - name: Clone LineageOS Tools and Utils
       run: |
         cd workspace
-        git clone --depth=1 https://github.com/LineageOS/android_tools_extract-utils -b lineage-22.2 ./android/tools/extract-utils
+        git clone --depth=1 https://github.com/LineageOS/android_tools_extract-utils -b lineage-23.2 ./android/tools/extract-utils
         echo "Done cloning extract-utils."
-        git clone --depth=1  https://github.com/LineageOS/android_prebuilts_extract-tools -b lineage-22.2 ./android/prebuilts/extract-tools
+        git clone --depth=1  https://github.com/LineageOS/android_prebuilts_extract-tools -b lineage-23.2 ./android/prebuilts/extract-tools
         echo "Done cloning extract-tools."
 
     - name: Setup upterm session
